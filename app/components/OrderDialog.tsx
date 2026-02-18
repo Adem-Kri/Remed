@@ -25,23 +25,25 @@ export function OrderDialog({ open, onClose }: Props) {
   const [packId, setPackId] = useState<PackId>("pack_b");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [phoneTouched, setPhoneTouched] = useState(false);
   const [address, setAddress] = useState("");
-  const [notes, setNotes] = useState("");
   const [honeypot, setHoneypot] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [submitAttempted, setSubmitAttempted] = useState(false);
 
   function resetForm() {
     setPackId("pack_b");
     setName("");
     setPhone("");
+    setPhoneTouched(false);
     setAddress("");
-    setNotes("");
     setHoneypot("");
     setSubmitting(false);
     setSuccess(false);
     setError(null);
+    setSubmitAttempted(false);
   }
 
   function handleClose() {
@@ -87,18 +89,48 @@ export function OrderDialog({ open, onClose }: Props) {
     () => phone.replace(/[\s-]/g, "").trim(),
     [phone],
   );
-  const phoneOk =
-    normalizedPhone.length === 0 ? true : PHONE_RE.test(normalizedPhone);
+  const phoneInvalid =
+    normalizedPhone.length > 0 && !PHONE_RE.test(normalizedPhone);
+  const showPhoneError = (phoneTouched || submitAttempted) && phoneInvalid;
+
+  const validationMessages = useMemo(() => {
+    if (locale === "ar") {
+      return {
+        missingName: "الاسم مطلوب",
+        invalidPhone: "رقم الهاتف غير صحيح",
+        missingAddress: "العنوان مطلوب",
+        missingPack: "اختر الباقة",
+        phoneHint: "رقم من 8 أرقام، مع +216 اختيارياً",
+      };
+    }
+    if (locale === "fr") {
+      return {
+        missingName: "Nom requis",
+        invalidPhone: "Téléphone invalide",
+        missingAddress: "Adresse requise",
+        missingPack: "Choisissez un pack",
+        phoneHint: "8 chiffres, +216 optionnel",
+      };
+    }
+    return {
+      missingName: "Name is required",
+      invalidPhone: "Invalid phone",
+      missingAddress: "Address is required",
+      missingPack: "Please choose a pack",
+      phoneHint: "8 digits, optional +216",
+    };
+  }, [locale]);
 
   if (!open) return null;
 
   async function submit() {
     setError(null);
-    if (!name.trim()) return setError("Missing name");
+    setSubmitAttempted(true);
+    if (!name.trim()) return setError(validationMessages.missingName);
     if (!normalizedPhone || !PHONE_RE.test(normalizedPhone))
-      return setError("Invalid phone");
-    if (!address.trim()) return setError("Missing address");
-    if (!packId) return setError("Missing pack");
+      return setError(validationMessages.invalidPhone);
+    if (!address.trim()) return setError(validationMessages.missingAddress);
+    if (!packId) return setError(validationMessages.missingPack);
 
     setSubmitting(true);
     try {
@@ -109,7 +141,6 @@ export function OrderDialog({ open, onClose }: Props) {
           name: name.trim(),
           phone: normalizedPhone,
           address: address.trim(),
-          notes: notes.trim(),
           packId,
           locale,
           utmSource,
@@ -136,14 +167,15 @@ export function OrderDialog({ open, onClose }: Props) {
 
   return (
     <div
-      className="fixed inset-0 z-50 overflow-y-auto bg-black/40 p-4 backdrop-blur-[2px]"
+      className="fixed inset-0 z-50 overflow-y-auto bg-indigo-950/30 p-4 backdrop-blur-[4px]"
       role="dialog"
       aria-modal="true"
     >
-      <div className="mx-auto w-full max-w-xl rounded-2xl bg-white p-5 shadow-sm md:p-6 max-h-[calc(100vh-2rem)] overflow-y-auto">
+      <div className="mx-auto w-full max-w-xl overflow-y-auto rounded-2xl border border-[#E5E5E5] bg-white p-5 shadow-[0_24px_64px_-32px_rgba(79,70,229,0.55)] md:p-6 max-h-[calc(100vh-2rem)]">
+        <div className="mb-4 h-1.5 w-24 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-emerald-500" />
         <div className="flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-lg font-semibold tracking-tight md:text-xl">
+            <h2 className="text-lg font-semibold tracking-tight text-zinc-900 md:text-xl">
               {orderDict.title}
             </h2>
             <p className="mt-1 text-sm text-zinc-600">{orderDict.subtitle}</p>
@@ -151,18 +183,18 @@ export function OrderDialog({ open, onClose }: Props) {
           <button
             type="button"
             onClick={handleClose}
-            className="rounded-xl border border-[#E5E5E5] bg-white px-3 py-1 text-sm text-zinc-700 hover:bg-zinc-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20"
+            className="rounded-xl border border-[#E5E5E5] bg-white px-3 py-1 text-sm text-zinc-700 transition duration-200 hover:bg-indigo-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/40"
           >
             {(locale === "ar" ? ar.ui.close : mvp.ui.close) ?? "Close"}
           </button>
         </div>
 
         {success ? (
-          <div className="mt-6 rounded-lg border border-[#E5E5E5] p-4">
-            <div className="text-base font-semibold">
+          <div className="mt-6 rounded-lg border border-emerald-100 bg-emerald-50/80 p-4">
+            <div className="text-base font-semibold text-emerald-900">
               {orderDict.successTitle}
             </div>
-            <div className="mt-1 text-sm text-zinc-600 dark:text-zinc-400">
+            <div className="mt-1 text-sm text-emerald-800">
               {orderDict.successBody}
             </div>
           </div>
@@ -180,8 +212,10 @@ export function OrderDialog({ open, onClose }: Props) {
                     <label
                       key={id}
                       className={
-                        "flex cursor-pointer flex-col items-start justify-between gap-3 rounded-2xl border bg-white p-4 transition-colors hover:bg-zinc-50 " +
-                        (selected ? "border-zinc-900" : "border-[#E5E5E5]")
+                        "flex cursor-pointer flex-col items-start justify-between gap-3 rounded-2xl border bg-white p-4 transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-50/40 hover:shadow-[0_12px_24px_-18px_rgba(79,70,229,0.5)] " +
+                        (selected
+                          ? "border-indigo-500 bg-indigo-50/60 shadow-[0_10px_22px_-16px_rgba(79,70,229,0.55)]"
+                          : "border-[#E5E5E5]")
                       }
                     >
                       <div className="flex w-full items-center justify-between">
@@ -198,7 +232,7 @@ export function OrderDialog({ open, onClose }: Props) {
                           </span>
                         </div>
                         {p.badge ? (
-                          <span className="rounded-full border border-[#E5E5E5] bg-zinc-50 px-2 py-0.5 text-[11px] font-semibold text-zinc-700">
+                          <span className="rounded-full border border-[#E5E5E5] bg-indigo-50 px-2 py-0.5 text-[11px] font-semibold text-indigo-700">
                             {p.badge === "premium" ? "Premium" : "Discount"}
                           </span>
                         ) : (
@@ -229,7 +263,7 @@ export function OrderDialog({ open, onClose }: Props) {
                   {orderDict.fields.name}
                 </label>
                 <input
-                  className="mt-1 w-full rounded-xl border border-[#E5E5E5] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/10"
+                  className="mt-1 w-full rounded-xl border border-[#E5E5E5] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-300/40"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                 />
@@ -241,18 +275,20 @@ export function OrderDialog({ open, onClose }: Props) {
                 </label>
                 <input
                   className={
-                    "mt-1 w-full rounded-xl border border-[#E5E5E5] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/10 " +
-                    (phoneOk ? "" : "border-red-500")
+                    "mt-1 w-full rounded-xl border border-[#E5E5E5] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-300/40 " +
+                    (showPhoneError ? "border-red-500" : "")
                   }
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  onBlur={() => setPhoneTouched(true)}
                   placeholder={"+216XXXXXXXX"}
                   inputMode="tel"
                   dir="ltr"
                 />
-                {!phoneOk ? (
+                {showPhoneError ? (
                   <div className="mt-1 text-xs text-red-600">
-                    Invalid phone (8 digits, optional +216)
+                    {validationMessages.invalidPhone} (
+                    {validationMessages.phoneHint})
                   </div>
                 ) : null}
               </div>
@@ -262,22 +298,10 @@ export function OrderDialog({ open, onClose }: Props) {
                   {orderDict.fields.address}
                 </label>
                 <textarea
-                  className="mt-1 w-full rounded-xl border border-[#E5E5E5] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/10"
+                  className="mt-1 w-full rounded-xl border border-[#E5E5E5] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-indigo-300/40"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   rows={3}
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-semibold">
-                  {orderDict.fields.notes}
-                </label>
-                <textarea
-                  className="mt-1 w-full rounded-xl border border-[#E5E5E5] bg-white px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-zinc-900/10"
-                  value={notes}
-                  onChange={(e) => setNotes(e.target.value)}
-                  rows={2}
                 />
               </div>
 
@@ -300,7 +324,7 @@ export function OrderDialog({ open, onClose }: Props) {
                 type="button"
                 onClick={submit}
                 disabled={submitting}
-                className="mt-1 w-full rounded-2xl bg-zinc-900 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-zinc-800 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-900/20"
+                className="mt-1 w-full rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 px-4 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_-16px_rgba(79,70,229,0.75)] transition duration-200 hover:-translate-y-0.5 hover:from-indigo-700 hover:to-violet-700 disabled:opacity-60 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/40"
               >
                 {submitting ? orderDict.submitting : orderDict.submit}
               </button>
