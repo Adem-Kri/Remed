@@ -87,6 +87,23 @@ function toDisplay(value: string) {
   return value.trim() ? value : "-";
 }
 
+function toIsoWithOffset(date: Date, offsetMinutes: number) {
+  const shifted = new Date(date.getTime() + offsetMinutes * 60_000);
+  const sign = offsetMinutes >= 0 ? "+" : "-";
+  const absMinutes = Math.abs(offsetMinutes);
+  const offsetHours = String(Math.floor(absMinutes / 60)).padStart(2, "0");
+  const offsetMins = String(absMinutes % 60).padStart(2, "0");
+
+  const year = shifted.getUTCFullYear();
+  const month = String(shifted.getUTCMonth() + 1).padStart(2, "0");
+  const day = String(shifted.getUTCDate()).padStart(2, "0");
+  const hours = String(shifted.getUTCHours()).padStart(2, "0");
+  const minutes = String(shifted.getUTCMinutes()).padStart(2, "0");
+  const seconds = String(shifted.getUTCSeconds()).padStart(2, "0");
+
+  return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}${sign}${offsetHours}:${offsetMins}`;
+}
+
 function buildOrderEmailHtml(data: {
   createdAt: string;
   locale: string;
@@ -196,7 +213,7 @@ export async function POST(req: NextRequest) {
     return Response.json({ ok: true });
   }
 
-  const createdAt = new Date().toISOString();
+  const createdAt = toIsoWithOffset(new Date(), 60);
   const v = validation.value;
 
   const referrerFromHeader = req.headers.get("referer") || "";
