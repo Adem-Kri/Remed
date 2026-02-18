@@ -135,7 +135,6 @@ export const ar: Dictionary = {
       name: "الاسم الكامل",
       phone: "رقم الهاتف",
       address: "العنوان",
-      notes: "ملاحظات (اختياري)",
       pack: "اختر الباك",
     },
     submit: "تأكيد الطلب",

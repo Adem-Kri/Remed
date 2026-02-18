@@ -19,10 +19,11 @@ The API route `POST /api/orders` appends orders to a Google Sheet and sends an e
 - Create a Google Sheet (example name: "Remed Orders")
 - Create a tab (sheet) named `Orders`
 - Add a header row with these columns:
-  - `createdAt`, `locale`, `packId`, `quantity`, `customerName`, `phone`, `address`, `notes`, `utmSource`, `utmCampaign`, `referrer`
+  - `createdAt`, `locale`, `packId`, `quantity`, `customerName`, `phone`, `address`, `utmSource`, `utmCampaign`, `referrer`
 - Create a Google Service Account and share the sheet with the service account email as **Editor**
 
 Notes:
+
 - `GOOGLE_SHEET_ID` should ideally be the raw sheet ID (the part between `/d/` and `/edit`). A full Google Sheets URL also works.
 - If you see a Sheets API `404 Requested entity was not found`, it almost always means the sheet wasn’t shared with the service account email (or the ID is wrong).
 

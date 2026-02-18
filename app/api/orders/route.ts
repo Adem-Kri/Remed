@@ -95,7 +95,6 @@ function buildOrderEmailHtml(data: {
   name: string;
   phone: string;
   address: string;
-  notes: string;
   utmSource: string;
   utmCampaign: string;
   referrer: string;
@@ -108,7 +107,6 @@ function buildOrderEmailHtml(data: {
     { label: "Customer Name", value: data.name },
     { label: "Phone", value: data.phone },
     { label: "Address", value: data.address },
-    { label: "Notes", value: toDisplay(data.notes) },
     { label: "UTM Source", value: toDisplay(data.utmSource) },
     { label: "UTM Campaign", value: toDisplay(data.utmCampaign) },
     { label: "Referrer", value: toDisplay(data.referrer) },
@@ -212,7 +210,6 @@ export async function POST(req: NextRequest) {
     v.name,
     v.phone,
     v.address,
-    v.notes,
     v.utmSource,
     v.utmCampaign,
     referrer,
@@ -238,7 +235,6 @@ export async function POST(req: NextRequest) {
     `name: ${v.name}`,
     `phone: ${v.phone}`,
     `address: ${v.address}`,
-    `notes: ${v.notes || "-"}`,
     "",
     `utmSource: ${v.utmSource || "-"}`,
     `utmCampaign: ${v.utmCampaign || "-"}`,
@@ -253,7 +249,6 @@ export async function POST(req: NextRequest) {
     name: v.name,
     phone: v.phone,
     address: v.address,
-    notes: v.notes || "",
     utmSource: v.utmSource || "",
     utmCampaign: v.utmCampaign || "",
     referrer: referrer || "",

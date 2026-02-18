@@ -6,7 +6,6 @@ export type OrderBody = {
   name: string;
   phone: string;
   address: string;
-  notes?: string;
   packId: PackId;
   locale: Locale;
   utmSource?: string;
@@ -19,7 +18,6 @@ export type ValidatedOrder = {
   name: string;
   phone: string;
   address: string;
-  notes: string;
   packId: PackId;
   quantity: number;
   locale: Locale;
@@ -54,7 +52,6 @@ export function validateOrderBody(
   const name = asString(raw.name).trim();
   const phone = normalizePhone(asString(raw.phone));
   const address = asString(raw.address).trim();
-  const notes = asString(raw.notes).trim();
   const packId = asString(raw.packId) as PackId;
   const locale = asString(raw.locale) as Locale;
 
@@ -80,7 +77,6 @@ export function validateOrderBody(
       name,
       phone,
       address,
-      notes,
       packId,
       quantity,
       locale,

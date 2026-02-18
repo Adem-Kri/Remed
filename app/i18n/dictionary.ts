@@ -61,7 +61,6 @@ export type Dictionary = {
       name: string;
       phone: string;
       address: string;
-      notes: string;
       pack: string;
     };
     submit: string;

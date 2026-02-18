@@ -16,7 +16,7 @@ export function LanguageSwitcher() {
   return (
     <div
       className={
-        "relative flex items-center gap-2 rounded-xl border border-[#E5E5E5] bg-white px-2.5 py-2 hover:bg-zinc-50 focus-within:ring-2 focus-within:ring-zinc-900/10 " +
+        "relative flex items-center gap-2 rounded-xl border border-[#E5E5E5] bg-gradient-to-r from-white to-indigo-50/40 px-2.5 py-2 shadow-sm transition duration-200 hover:to-indigo-50/70 focus-within:ring-2 focus-within:ring-indigo-300/40 " +
         (rtl ? "flex-row-reverse" : "")
       }
     >
