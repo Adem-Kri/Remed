@@ -75,16 +75,6 @@ export const en: Dictionary = {
         "⏳ Results often start between 2 to 4 weeks, with stronger effects after 2 to 3 months.",
       ],
     },
-    expectedResults: {
-      title: "🎯 What to expect with regular use",
-      bullets: [
-        "✅ Gradual pressure stability",
-        "✅ Better blood circulation",
-        "✅ Less headache and fatigue",
-        "✅ Better artery and heart support",
-        "✅ Lower long-term complication risk",
-      ],
-    },
     guarantee: {
       title: "🛡️ 30-day guarantee — try it risk-free",
       body: [

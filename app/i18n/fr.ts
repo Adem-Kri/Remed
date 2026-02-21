@@ -76,16 +76,6 @@ export const fr: Dictionary = {
         "⏳ Les premiers effets sont souvent ressentis entre 2 et 4 semaines, avec des résultats plus marqués après 2 à 3 mois.",
       ],
     },
-    expectedResults: {
-      title: "🎯 Résultats attendus avec une prise régulière",
-      bullets: [
-        "✅ Stabilisation progressive de la tension",
-        "✅ Meilleure circulation sanguine",
-        "✅ Réduction des maux de tête et de la fatigue",
-        "✅ Meilleur soutien des artères et du cœur",
-        "✅ Réduction du risque de complications à long terme",
-      ],
-    },
     guarantee: {
       title: "🛡️ Garantie 30 jours — essayez sans risque",
       body: [

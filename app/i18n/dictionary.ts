@@ -32,10 +32,6 @@ export type Dictionary = {
       title: string;
       body: string[];
     };
-    expectedResults: {
-      title: string;
-      bullets: string[];
-    };
     guarantee: {
       title: string;
       body: string[];

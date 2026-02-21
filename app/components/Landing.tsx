@@ -240,14 +240,6 @@ export function Landing() {
           ))}
         </Section>
 
-        <Section title={dict.sections.expectedResults.title}>
-          <ul className="space-y-1">
-            {dict.sections.expectedResults.bullets.map((b) => (
-              <li key={b}>{b}</li>
-            ))}
-          </ul>
-        </Section>
-
         <Section title={dict.sections.guarantee.title}>
           {dict.sections.guarantee.body.map((p) => (
             <p key={p}>{p}</p>
