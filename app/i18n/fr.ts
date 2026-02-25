@@ -34,15 +34,21 @@ export const fr: Dictionary = {
     whoFor: {
       title: "👤 Pour qui REMED HYPERTENSION est recommandé ?",
       body: [
-        "Si vous avez :",
-        "✅ Tension élevée ou instable ✅ Maux de tête ou vertiges ✅ Fatigue ou palpitations ✅ Crainte d’AVC/risques cardiaques ✅ Cholestérol élevé ou artères fragiles",
+        "Recommandé si vous avez :",
         "📌 Particulièrement adapté aux hommes et femmes de plus de 40 ans.",
+      ],
+      chips: [
+        "✅ Tension élevée ou instable",
+        "✅ Cholestérol élevé",
+        "✅ Crainte d’AVC ou d’accidents cardiaques",
+        "✅ Fatigue et palpitations",
       ],
     },
     withMeds: {
       title: "❓ Peut-on l’utiliser avec un traitement antihypertenseur ?",
       body: [
-        "Oui ✅ REMED HYPERTENSION peut être utilisé avec votre traitement comme soutien naturel des artères et de l’équilibre tensionnel.",
+        "✅ Oui",
+        "REMED HYPERTENSION peut être utilisé avec votre traitement comme soutien naturel des artères et de l’équilibre tensionnel.",
         "📌 N’arrêtez pas votre traitement sans avis médical.",
         "🔥 REMED HYPERTENSION aide à :",
       ],
@@ -57,33 +63,35 @@ export const fr: Dictionary = {
     ingredients: {
       title: "🌿 Ingrédients de REMED HYPERTENSION",
       bullets: [
-        "🫒 Extrait de feuille d’olivier (Oleuropein) ✔ soutient la tension et les artères",
-        "🐝 Propolis ✔ soutient les vaisseaux et protège le cœur",
-        "🍯 Gelée royale ✔ soutient l’énergie et la vitalité cardiaque",
+        "🫒 Extrait de feuille d’olivier (Oleuropein)",
+        "✔ Soutient la tension et les artères",
+        "🐝 Propolis",
+        "✔ Soutient les vaisseaux et protège le cœur",
+        "🍯 Gelée royale",
+        "✔ Soutient l’énergie et la vitalité cardiaque",
         "🧪 Ingrédients complémentaires pour assurer la qualité et la stabilité de la capsule",
+      ],
+    },
+    resultsTiming: {
+      title: "⏳ Quand puis-je voir les résultats ?",
+      body: [
+        "Vous pouvez ressentir une amélioration nette et plus d’énergie après une semaine d’utilisation.",
+        "Cependant, pour un effet complet, une utilisation d’au moins 90 jours est nécessaire.",
+        "📌 Une prise quotidienne pendant 90 jours consécutifs est recommandée pour des résultats forts et durables.",
       ],
     },
     usage: {
       title: "🕒 Comment utiliser REMED HYPERTENSION",
       body: [
-        "📌 Premier mois :",
-        "- Semaine 1 : 💊 1 capsule/jour",
-        "- Semaine 2 : 💊 2 capsules/jour",
-        "- Reste du mois : 💊 3 capsules/jour",
-        "📌 Mois 2 et 3 :",
-        "- 💊 2 capsules/jour",
+        "🔥 Un protocole sérieux contre l’hypertension ne commence pas avec une seule bouteille, mais avec un programme complet.",
+        "📌 Protocole court :",
+        "✅ Semaine 1 : 1 capsule/jour",
+        "✅ Semaine 2 : 2 capsules/jour",
+        "✅ Semaines 3-4 : 3 capsules/jour",
+        "➡️ Le premier mois demande environ 63 capsules.",
+        "🎯 C’est pourquoi nous recommandons le pack 3 bouteilles pour un meilleur résultat.",
+        "⚠️ Une seule bouteille ne couvre pas le protocole complet du premier mois.",
         "✔ De préférence après le repas avec un grand verre d’eau.",
-        "⏳ Les premiers effets sont souvent ressentis entre 2 et 4 semaines, avec des résultats plus marqués après 2 à 3 mois.",
-      ],
-    },
-    expectedResults: {
-      title: "🎯 Résultats attendus avec une prise régulière",
-      bullets: [
-        "✅ Stabilisation progressive de la tension",
-        "✅ Meilleure circulation sanguine",
-        "✅ Réduction des maux de tête et de la fatigue",
-        "✅ Meilleur soutien des artères et du cœur",
-        "✅ Réduction du risque de complications à long terme",
       ],
     },
     guarantee: {
@@ -104,7 +112,7 @@ export const fr: Dictionary = {
         },
         {
           q: "Y a-t-il des effets secondaires ?",
-          a: "Complément naturel. Si vous êtes allergique aux produits de la ruche, consultez un médecin.",
+          a: "Les ingrédients naturels le rendent adapté à 99,9% des personnes. Si vous êtes allergique aux produits de la ruche, consultez votre médecin avant usage.",
         },
         {
           q: "Puis-je l’utiliser avec mon traitement ?",

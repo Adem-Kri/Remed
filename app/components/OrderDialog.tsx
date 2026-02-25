@@ -22,7 +22,7 @@ export function OrderDialog({ open, onClose }: Props) {
   const [utmSource, setUtmSource] = useState("");
   const [utmCampaign, setUtmCampaign] = useState("");
 
-  const [packId, setPackId] = useState<PackId>("pack_b");
+  const [packId, setPackId] = useState<PackId>("pack_c");
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [phoneTouched, setPhoneTouched] = useState(false);
@@ -34,7 +34,7 @@ export function OrderDialog({ open, onClose }: Props) {
   const [submitAttempted, setSubmitAttempted] = useState(false);
 
   function resetForm() {
-    setPackId("pack_b");
+    setPackId("pack_c");
     setName("");
     setPhone("");
     setPhoneTouched(false);
@@ -204,7 +204,7 @@ export function OrderDialog({ open, onClose }: Props) {
               <label className="text-sm font-semibold">
                 {orderDict.fields.pack}
               </label>
-              <div className="mt-3 grid gap-2 md:grid-cols-3">
+              <div className="mt-3 flex gap-3 overflow-x-auto pb-1 md:grid md:grid-cols-2 md:overflow-visible md:pb-0">
                 {PACK_ORDER.map((id) => {
                   const p = PACKS[id];
                   const selected = packId === id;
@@ -212,12 +212,29 @@ export function OrderDialog({ open, onClose }: Props) {
                     <label
                       key={id}
                       className={
-                        "flex cursor-pointer flex-col items-start justify-between gap-3 rounded-2xl border bg-white p-4 transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-50/40 hover:shadow-[0_12px_24px_-18px_rgba(79,70,229,0.5)] " +
+                        "flex min-w-[260px] shrink-0 cursor-pointer flex-col items-start justify-between gap-3 rounded-2xl border bg-white p-4 transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-50/40 hover:shadow-[0_12px_24px_-18px_rgba(79,70,229,0.5)] md:min-w-0 " +
                         (selected
                           ? "border-indigo-500 bg-indigo-50/60 shadow-[0_10px_22px_-16px_rgba(79,70,229,0.55)]"
                           : "border-[#E5E5E5]")
                       }
                     >
+                      <div className="relative h-24 w-full">
+                        <img
+                          src={p.imagePath}
+                          alt={p.title[locale]}
+                          onError={(e) => {
+                            e.currentTarget.src = "/Remed.jpeg";
+                          }}
+                          className="h-24 w-full rounded-2xl bg-white object-contain p-2"
+                          loading="lazy"
+                        />
+                        <div className="pointer-events-none absolute inset-0 rounded-2xl">
+                          <div className="absolute inset-x-0 top-0 h-[3px] rounded-t-2xl bg-gradient-to-b from-white to-transparent" />
+                          <div className="absolute inset-x-0 bottom-0 h-[3px] rounded-b-2xl bg-gradient-to-t from-white to-transparent" />
+                          <div className="absolute inset-y-0 left-0 w-[3px] rounded-l-2xl bg-gradient-to-r from-white to-transparent" />
+                          <div className="absolute inset-y-0 right-0 w-[3px] rounded-r-2xl bg-gradient-to-l from-white to-transparent" />
+                        </div>
+                      </div>
                       <div className="flex w-full items-center justify-between">
                         <div className="flex items-center gap-2">
                           <input
@@ -228,12 +245,28 @@ export function OrderDialog({ open, onClose }: Props) {
                             onChange={() => setPackId(id)}
                           />
                           <span className="text-sm font-semibold">
-                            {p.quantity} {p.quantity === 1 ? "item" : "items"}
+                            {p.title[locale]}
                           </span>
                         </div>
                         {p.badge ? (
                           <span className="rounded-full border border-[#E5E5E5] bg-indigo-50 px-2 py-0.5 text-[11px] font-semibold text-indigo-700">
-                            {p.badge === "premium" ? "Premium" : "Discount"}
+                            {p.badge === "premium"
+                              ? locale === "ar"
+                                ? "الأكثر طلبًا"
+                                : locale === "fr"
+                                  ? "Populaire"
+                                  : "Most popular"
+                              : p.badge === "best_value"
+                                ? locale === "ar"
+                                  ? "أفضل قيمة"
+                                  : locale === "fr"
+                                    ? "Meilleure valeur"
+                                    : "Best value"
+                                : locale === "ar"
+                                  ? "خصم"
+                                  : locale === "fr"
+                                    ? "Réduction"
+                                    : "Discount"}
                           </span>
                         ) : (
                           <span className="text-[11px] text-zinc-500">
@@ -242,13 +275,26 @@ export function OrderDialog({ open, onClose }: Props) {
                         )}
                       </div>
                       <div className="w-full">
+                        <div className="text-xs text-zinc-600">
+                          {locale === "ar"
+                            ? `${p.quantity} قوارير`
+                            : locale === "fr"
+                              ? `${p.quantity} bouteilles`
+                              : `${p.quantity} bottles`}
+                        </div>
                         <div className="text-lg font-semibold tracking-tight">
                           {p.priceTnd} TND
                         </div>
-                        <div className="mt-0.5 text-xs text-zinc-500">
-                          {locale === "ar"
-                            ? "الدفع عند الاستلام"
-                            : "Pay on delivery"}
+                        {p.oldPriceTnd ? (
+                          <div className="text-xs text-zinc-500 line-through">
+                            {p.oldPriceTnd} TND
+                          </div>
+                        ) : null}
+                        <div className="mt-2 text-[12px] leading-5 text-zinc-700">
+                          {p.gift[locale]}
+                        </div>
+                        <div className="mt-1 text-[12px] font-medium text-indigo-700">
+                          {p.note[locale]}
                         </div>
                       </div>
                     </label>
