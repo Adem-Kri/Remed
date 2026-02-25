@@ -17,6 +17,7 @@ export type Dictionary = {
     whoFor: {
       title: string;
       body: string[];
+      chips: string[];
     };
     withMeds: {
       title: string;
@@ -27,6 +28,10 @@ export type Dictionary = {
     ingredients: {
       title: string;
       bullets: string[];
+    };
+    resultsTiming: {
+      title: string;
+      body: string[];
     };
     usage: {
       title: string;

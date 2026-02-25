@@ -167,6 +167,16 @@ export function Landing() {
           {dict.sections.whoFor.body.map((p) => (
             <p key={p}>{p}</p>
           ))}
+          <div className="flex flex-wrap gap-2 pt-1">
+            {dict.sections.whoFor.chips.map((chip) => (
+              <div
+                key={chip}
+                className="rounded-full border border-[#E5E5E5] bg-indigo-50/70 px-3 py-1.5 text-sm font-medium text-zinc-800"
+              >
+                {chip}
+              </div>
+            ))}
+          </div>
         </Section>
 
         <Section title={dict.sections.withMeds.title}>
@@ -187,6 +197,12 @@ export function Landing() {
               <li key={b}>{b}</li>
             ))}
           </ul>
+        </Section>
+
+        <Section title={dict.sections.resultsTiming.title}>
+          {dict.sections.resultsTiming.body.map((p) => (
+            <p key={p}>{p}</p>
+          ))}
         </Section>
 
         <Section

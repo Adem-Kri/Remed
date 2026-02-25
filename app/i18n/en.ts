@@ -33,15 +33,21 @@ export const en: Dictionary = {
     whoFor: {
       title: "👤 Who is REMED HYPERTENSION for?",
       body: [
-        "If you deal with:",
-        "✅ High or unstable blood pressure ✅ Headaches or dizziness ✅ Fatigue or palpitations ✅ Fear of stroke/heart risks ✅ High cholesterol or stressed arteries",
+        "Recommended if you deal with:",
         "📌 Especially suitable for men and women aged 40+.",
+      ],
+      chips: [
+        "✅ High or unstable blood pressure",
+        "✅ High cholesterol",
+        "✅ Fear of stroke or heart events",
+        "✅ Fatigue and palpitations",
       ],
     },
     withMeds: {
       title: "❓ Can it be used with blood pressure medication?",
       body: [
-        "Yes ✅ REMED HYPERTENSION can be used alongside medication as a natural support for arteries and progressive blood pressure balance.",
+        "✅ Yes",
+        "REMED HYPERTENSION can be used alongside medication as a natural support for arteries and progressive blood pressure balance.",
         "📌 Do not stop your medication on your own.",
         "🔥 REMED HYPERTENSION helps with:",
       ],
@@ -56,23 +62,35 @@ export const en: Dictionary = {
     ingredients: {
       title: "🌿 REMED HYPERTENSION ingredients",
       bullets: [
-        "🫒 Olive leaf extract (Oleuropein) ✔ supports blood pressure and healthy arteries",
-        "🐝 Propolis ✔ supports blood vessels and heart protection",
-        "🍯 Royal jelly ✔ supports energy and heart vitality",
+        "🫒 Olive leaf extract (Oleuropein)",
+        "✔ Supports blood pressure and healthy arteries",
+        "🐝 Propolis",
+        "✔ Supports blood vessels and heart protection",
+        "🍯 Royal jelly",
+        "✔ Supports energy and heart vitality",
         "🧪 Complementary ingredients to ensure capsule quality and stability",
+      ],
+    },
+    resultsTiming: {
+      title: "⏳ When can I see results?",
+      body: [
+        "You may feel clearer improvement and better energy after just one week of use.",
+        "However, for full product effect, it should be used for at least 90 days to feel complete transformation.",
+        "📌 Daily use for 90 consecutive days is recommended for best and lasting results.",
       ],
     },
     usage: {
       title: "🕒 How to use REMED HYPERTENSION",
       body: [
-        "📌 First month:",
-        "- Week 1: 💊 1 capsule/day",
-        "- Week 2: 💊 2 capsules/day",
-        "- Rest of month: 💊 3 capsules/day",
-        "📌 Month 2 and 3:",
-        "- 💊 2 capsules/day",
+        "🔥 The right blood pressure treatment offer does not start with one bottle; it starts with a full program.",
+        "📌 Short protocol:",
+        "✅ Week 1: 1 capsule/day",
+        "✅ Week 2: 2 capsules/day",
+        "✅ Weeks 3-4: 3 capsules/day",
+        "➡️ The first month needs around 63 capsules.",
+        "🎯 That is why we recommend the 3-bottle pack for best results.",
+        "⚠️ One bottle alone is not enough for a full first-month protocol.",
         "✔ Preferably after food with a large glass of water.",
-        "⏳ Results often start between 2 to 4 weeks, with stronger effects after 2 to 3 months.",
       ],
     },
     guarantee: {
@@ -93,7 +111,7 @@ export const en: Dictionary = {
         },
         {
           q: "Any side effects?",
-          a: "Natural supplement. If you’re allergic to bee products, consult a doctor.",
+          a: "Natural ingredients make it suitable for 99.9% of people. If you are allergic to bee products, consult your doctor first.",
         },
         {
           q: "Can I use it with my medication?",
