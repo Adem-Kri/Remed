@@ -94,7 +94,7 @@ export function Landing() {
               <div className="inline-flex items-center rounded-full border border-indigo-100 bg-indigo-50 px-3 py-1 text-xs font-semibold text-indigo-700">
                 {hero.trustLine}
               </div>
-              <h1 className="mt-4 text-3xl font-semibold leading-tight tracking-tight text-zinc-950 md:text-[2.65rem]">
+              <h1 className="mt-4 text-[1.8rem] font-semibold leading-tight tracking-tight text-zinc-950 [word-break:keep-all] md:text-[2.35rem]">
                 {hero.title}
               </h1>
               <p className="mt-3 text-base leading-7 text-zinc-700">
