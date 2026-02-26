@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { PACKS, PACK_ORDER, type PackId } from "../config/packs";
 import { getMvpDict } from "../i18n";
 import { useLocale } from "../i18n/LocaleProvider";
+import { trackEvent } from "../lib/analytics";
 
 type Props = {
   open: boolean;
@@ -158,8 +159,17 @@ export function OrderDialog({ open, onClose }: Props) {
       }
 
       setSuccess(true);
+      trackEvent("submit_order_success", {
+        locale,
+        pack_id: packId,
+        quantity: PACKS[packId].quantity,
+      });
     } catch {
       setError(orderDict.errorGeneric);
+      trackEvent("submit_order_error", {
+        locale,
+        pack_id: packId,
+      });
     } finally {
       setSubmitting(false);
     }
@@ -170,8 +180,12 @@ export function OrderDialog({ open, onClose }: Props) {
       className="fixed inset-0 z-50 overflow-y-auto bg-indigo-950/30 p-4 backdrop-blur-[4px]"
       role="dialog"
       aria-modal="true"
+      onClick={handleClose}
     >
-      <div className="mx-auto w-full max-w-xl overflow-y-auto rounded-2xl border border-[#E5E5E5] bg-white p-5 shadow-[0_24px_64px_-32px_rgba(79,70,229,0.55)] md:p-6 max-h-[calc(100vh-2rem)]">
+      <div
+        className="mx-auto w-full max-w-xl overflow-y-auto rounded-2xl border border-[#E5E5E5] bg-white p-5 shadow-[0_24px_64px_-32px_rgba(79,70,229,0.55)] md:p-6 max-h-[calc(100vh-2rem)]"
+        onClick={(e) => e.stopPropagation()}
+      >
         <div className="mb-4 h-1.5 w-24 rounded-full bg-gradient-to-r from-indigo-500 via-violet-500 to-emerald-500" />
         <div className="flex items-start justify-between gap-4">
           <div>
@@ -204,7 +218,7 @@ export function OrderDialog({ open, onClose }: Props) {
               <label className="text-sm font-semibold">
                 {orderDict.fields.pack}
               </label>
-              <div className="mt-3 flex gap-3 overflow-x-auto pb-1 md:grid md:grid-cols-2 md:overflow-visible md:pb-0">
+              <div className="mt-2 grid gap-1.5">
                 {PACK_ORDER.map((id) => {
                   const p = PACKS[id];
                   const selected = packId === id;
@@ -212,20 +226,20 @@ export function OrderDialog({ open, onClose }: Props) {
                     <label
                       key={id}
                       className={
-                        "flex min-w-[260px] shrink-0 cursor-pointer flex-col items-start justify-between gap-3 rounded-2xl border bg-white p-4 transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-50/40 hover:shadow-[0_12px_24px_-18px_rgba(79,70,229,0.5)] md:min-w-0 " +
+                        "flex w-full cursor-pointer items-start gap-2 rounded-2xl border bg-white p-2 text-left transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-50/40 hover:shadow-[0_12px_24px_-18px_rgba(79,70,229,0.5)] " +
                         (selected
-                          ? "border-indigo-500 bg-indigo-50/60 shadow-[0_10px_22px_-16px_rgba(79,70,229,0.55)]"
+                          ? "border-indigo-500 bg-indigo-50/60 ring-2 ring-indigo-300/60 shadow-[0_10px_22px_-16px_rgba(79,70,229,0.55)]"
                           : "border-[#E5E5E5]")
                       }
                     >
-                      <div className="relative h-24 w-full">
+                      <div className="relative h-28 w-28 shrink-0 md:h-32 md:w-32">
                         <img
                           src={p.imagePath}
                           alt={p.title[locale]}
                           onError={(e) => {
                             e.currentTarget.src = "/Remed.jpeg";
                           }}
-                          className="h-24 w-full rounded-2xl bg-white object-contain p-2"
+                          className="h-full w-full rounded-2xl bg-white object-contain p-1.5"
                           loading="lazy"
                         />
                         <div className="pointer-events-none absolute inset-0 rounded-2xl">
@@ -235,65 +249,73 @@ export function OrderDialog({ open, onClose }: Props) {
                           <div className="absolute inset-y-0 right-0 w-[3px] rounded-r-2xl bg-gradient-to-l from-white to-transparent" />
                         </div>
                       </div>
-                      <div className="flex w-full items-center justify-between">
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="radio"
-                            name="pack"
-                            value={id}
-                            checked={selected}
-                            onChange={() => setPackId(id)}
-                          />
-                          <span className="text-sm font-semibold">
-                            {p.title[locale]}
-                          </span>
-                        </div>
-                        {p.badge ? (
-                          <span className="rounded-full border border-[#E5E5E5] bg-indigo-50 px-2 py-0.5 text-[11px] font-semibold text-indigo-700">
-                            {p.badge === "premium"
-                              ? locale === "ar"
-                                ? "الأكثر طلبًا"
-                                : locale === "fr"
-                                  ? "Populaire"
-                                  : "Most popular"
-                              : p.badge === "best_value"
+                      <div className="min-w-0 flex-1">
+                        <div className="flex w-full items-center justify-between gap-1">
+                          <div className="flex min-w-0 items-center gap-1.5">
+                            <input
+                              type="radio"
+                              name="pack"
+                              value={id}
+                              checked={selected}
+                              onChange={() => {
+                                setPackId(id);
+                                trackEvent("select_pack", {
+                                  locale,
+                                  pack_id: id,
+                                  quantity: p.quantity,
+                                  price_tnd: p.priceTnd,
+                                });
+                              }}
+                            />
+                            <span className="truncate text-[13px] font-semibold">
+                              {p.title[locale]}
+                            </span>
+                          </div>
+                          {p.badge ? (
+                            <span className="rounded-full border border-[#E5E5E5] bg-indigo-50 px-2 py-0.5 text-[11px] font-bold text-indigo-700 shadow-sm md:text-xs">
+                              {p.badge === "premium"
                                 ? locale === "ar"
-                                  ? "أفضل قيمة"
+                                  ? "🔥 الأكثر طلبًا"
                                   : locale === "fr"
-                                    ? "Meilleure valeur"
-                                    : "Best value"
-                                : locale === "ar"
-                                  ? "خصم"
-                                  : locale === "fr"
-                                    ? "Réduction"
-                                    : "Discount"}
-                          </span>
-                        ) : (
-                          <span className="text-[11px] text-zinc-500">
-                            &nbsp;
-                          </span>
-                        )}
-                      </div>
-                      <div className="w-full">
-                        <div className="text-xs text-zinc-600">
+                                    ? "🔥 Populaire"
+                                    : "🔥 Most popular"
+                                : p.badge === "best_value"
+                                  ? locale === "ar"
+                                    ? "🏆 أفضل قيمة"
+                                    : locale === "fr"
+                                      ? "🏆 Meilleure valeur"
+                                      : "🏆 Best value"
+                                  : locale === "ar"
+                                    ? "💸 خصم"
+                                    : locale === "fr"
+                                      ? "💸 Réduction"
+                                      : "💸 Discount"}
+                            </span>
+                          ) : (
+                            <span className="text-[11px] text-zinc-500">
+                              &nbsp;
+                            </span>
+                          )}
+                        </div>
+                        <div className="mt-0 text-[11px] text-zinc-600">
                           {locale === "ar"
                             ? `${p.quantity} قوارير`
                             : locale === "fr"
                               ? `${p.quantity} bouteilles`
                               : `${p.quantity} bottles`}
                         </div>
-                        <div className="text-lg font-semibold tracking-tight">
-                          {p.priceTnd} TND
+                        <div className="text-[17px] font-semibold leading-none tracking-tight text-indigo-700">
+                          {p.priceTnd} {locale === "ar" ? "د.ت" : "TND"}
                         </div>
                         {p.oldPriceTnd ? (
-                          <div className="text-xs text-zinc-500 line-through">
-                            {p.oldPriceTnd} TND
+                          <div className="mt-0.5 inline-flex rounded-full border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[11px] font-semibold text-rose-600 line-through decoration-2">
+                            {p.oldPriceTnd} {locale === "ar" ? "د.ت" : "TND"}
                           </div>
                         ) : null}
-                        <div className="mt-2 text-[12px] leading-5 text-zinc-700">
+                        <div className="mt-1 text-[11px] leading-4 text-zinc-700">
                           {p.gift[locale]}
                         </div>
-                        <div className="mt-1 text-[12px] font-medium text-indigo-700">
+                        <div className="mt-0.5 text-[11px] font-medium leading-4 text-indigo-700">
                           {p.note[locale]}
                         </div>
                       </div>

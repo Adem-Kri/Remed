@@ -218,9 +218,11 @@ export async function POST(req: NextRequest) {
 
   const referrerFromHeader = req.headers.get("referer") || "";
   const referrer = v.referrer || referrerFromHeader;
+  const status = "en cours";
 
   const row = [
     createdAt,
+    status,
     v.locale,
     v.packId,
     v.quantity,
