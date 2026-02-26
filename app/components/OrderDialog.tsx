@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 import { PACKS, PACK_ORDER, type PackId } from "../config/packs";
@@ -33,6 +34,9 @@ export function OrderDialog({ open, onClose }: Props) {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [submitAttempted, setSubmitAttempted] = useState(false);
+  const [packImageFallback, setPackImageFallback] = useState<
+    Partial<Record<PackId, boolean>>
+  >({});
 
   function resetForm() {
     setPackId("pack_c");
@@ -233,14 +237,20 @@ export function OrderDialog({ open, onClose }: Props) {
                       }
                     >
                       <div className="relative h-28 w-28 shrink-0 md:h-32 md:w-32">
-                        <img
-                          src={p.imagePath}
+                        <Image
+                          src={packImageFallback[id] ? "/Remed.webp" : p.imagePath}
                           alt={p.title[locale]}
+                          width={160}
+                          height={160}
                           onError={(e) => {
-                            e.currentTarget.src = "/Remed.jpeg";
+                            if (!packImageFallback[id]) {
+                              setPackImageFallback((prev) => ({
+                                ...prev,
+                                [id]: true,
+                              }));
+                            }
                           }}
                           className="h-full w-full rounded-2xl bg-white object-contain p-1.5"
-                          loading="lazy"
                         />
                         <div className="pointer-events-none absolute inset-0 rounded-2xl">
                           <div className="absolute inset-x-0 top-0 h-[3px] rounded-t-2xl bg-gradient-to-b from-white to-transparent" />

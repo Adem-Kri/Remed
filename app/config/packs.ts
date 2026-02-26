@@ -24,7 +24,7 @@ export const PACKS: Record<PackId, Pack> = {
     quantity: 1,
     priceTnd: 69,
     oldPriceTnd: 92,
-    imagePath: "/Remed.jpeg",
+    imagePath: "/Remed.webp",
     title: {
       ar: "باك 1",
       fr: "Pack 1",
@@ -47,7 +47,7 @@ export const PACKS: Record<PackId, Pack> = {
     priceTnd: 129,
     oldPriceTnd: 138,
     badge: "discount",
-    imagePath: "/pack-of-2.png",
+    imagePath: "/pack-of-2.webp",
     title: {
       ar: "باك 2",
       fr: "Pack 2",
@@ -70,7 +70,7 @@ export const PACKS: Record<PackId, Pack> = {
     priceTnd: 175,
     oldPriceTnd: 207,
     badge: "premium",
-    imagePath: "/pack-of-3.png",
+    imagePath: "/pack-of-3.webp",
     title: {
       ar: "باك 3",
       fr: "Pack 3",
@@ -93,7 +93,7 @@ export const PACKS: Record<PackId, Pack> = {
     priceTnd: 330,
     oldPriceTnd: 414,
     badge: "best_value",
-    imagePath: "/pack-of-6.png",
+    imagePath: "/pack-of-6.webp",
     title: {
       ar: "باك 4",
       fr: "Pack 4",
