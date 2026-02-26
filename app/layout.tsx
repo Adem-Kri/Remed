@@ -7,6 +7,11 @@ import { LocaleProvider } from "./i18n/LocaleProvider";
 export const metadata: Metadata = {
   title: "Remed",
   description: "Remed COD landing page",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({

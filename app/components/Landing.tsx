@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -7,7 +8,11 @@ import { getMvpDict } from "../i18n";
 import { useLocale } from "../i18n/LocaleProvider";
 import { trackEvent } from "../lib/analytics";
 import { LanguageSwitcher } from "./LanguageSwitcher";
-import { OrderDialog } from "./OrderDialog";
+
+const OrderDialog = dynamic(
+  () => import("./OrderDialog").then((mod) => mod.OrderDialog),
+  { ssr: false },
+);
 
 function Section({
   title,
@@ -66,7 +71,7 @@ export function Landing() {
         <div className="mx-auto flex w-full max-w-5xl items-center justify-between px-4 py-3">
           <div className="flex items-center gap-2">
             <Image
-              src="/Remed.jpeg"
+              src="/Remed.webp"
               alt="Remed"
               width={32}
               height={32}
@@ -145,7 +150,7 @@ export function Landing() {
                   aria-hidden="true"
                 />
                 <Image
-                  src="/Remed.jpeg"
+                  src="/Remed.webp"
                   alt="Remed"
                   width={520}
                   height={520}
@@ -224,24 +229,25 @@ export function Landing() {
             <div className="rounded-2xl border border-[#E5E5E5] bg-indigo-50/60 p-3 transition duration-300 hover:shadow-[0_16px_34px_-26px_rgba(79,70,229,0.4)]">
               {formulaPreviewOk ? (
                 <a
-                  href="/formula.png"
+                  href="/formula.webp"
                   target="_blank"
                   rel="noreferrer"
                   className="block"
                 >
-                  <img
-                    src="/formula.png"
+                  <Image
+                    src="/formula.webp"
                     alt={locale === "ar" ? "التركيبة" : "Formula"}
+                    width={1200}
+                    height={800}
                     className="h-auto w-full rounded-xl border border-[#E5E5E5] bg-white object-contain shadow-sm transition duration-300 hover:scale-[1.01]"
-                    loading="lazy"
                     onError={() => setFormulaPreviewOk(false)}
                   />
                 </a>
               ) : (
                 <div className="rounded-xl border border-[#E5E5E5] bg-white px-4 py-6 text-center text-sm text-zinc-700">
                   {locale === "ar"
-                    ? "ضع ملف formula.png داخل مجلد public لعرض المعاينة هنا"
-                    : "Place formula.png in the public/ folder to show the preview here"}
+                    ? "ضع ملف formula.webp داخل مجلد public لعرض المعاينة هنا"
+                    : "Place formula.webp in the public/ folder to show the preview here"}
                 </div>
               )}
             </div>
