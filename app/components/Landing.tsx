@@ -5,6 +5,7 @@ import { useState } from "react";
 
 import { getMvpDict } from "../i18n";
 import { useLocale } from "../i18n/LocaleProvider";
+import { trackEvent } from "../lib/analytics";
 import { LanguageSwitcher } from "./LanguageSwitcher";
 import { OrderDialog } from "./OrderDialog";
 
@@ -44,6 +45,11 @@ export function Landing() {
 
   const [orderOpen, setOrderOpen] = useState(false);
   const [formulaPreviewOk, setFormulaPreviewOk] = useState(true);
+
+  function openOrderDialog(source: "hero" | "guarantee" | "final") {
+    trackEvent("open_order_dialog", { source, locale });
+    setOrderOpen(true);
+  }
 
   return (
     <div className="relative min-h-screen overflow-x-clip bg-gradient-to-b from-indigo-50/40 via-white to-emerald-50/30 text-zinc-900">
@@ -119,7 +125,7 @@ export function Landing() {
               <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
                 <button
                   type="button"
-                  onClick={() => setOrderOpen(true)}
+                  onClick={() => openOrderDialog("hero")}
                   className="inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_-14px_rgba(79,70,229,0.8)] transition duration-200 hover:-translate-y-0.5 hover:from-indigo-700 hover:to-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/40"
                 >
                   {hero.cta}
@@ -262,7 +268,7 @@ export function Landing() {
           ))}
           <button
             type="button"
-            onClick={() => setOrderOpen(true)}
+            onClick={() => openOrderDialog("guarantee")}
             className="mt-5 inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-[0_10px_24px_-14px_rgba(79,70,229,0.8)] transition duration-200 hover:-translate-y-0.5 hover:from-indigo-700 hover:to-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/40"
           >
             {dict.sections.guarantee.cta}
@@ -289,7 +295,7 @@ export function Landing() {
           <p>{finalCta.body}</p>
           <button
             type="button"
-            onClick={() => setOrderOpen(true)}
+            onClick={() => openOrderDialog("final")}
             className="mt-5 w-full rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 px-6 py-4 text-sm font-semibold text-white shadow-[0_12px_28px_-16px_rgba(79,70,229,0.75)] transition duration-200 hover:-translate-y-0.5 hover:from-indigo-700 hover:to-violet-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/40"
           >
             {finalCta.cta}

@@ -19,7 +19,7 @@ The API route `POST /api/orders` appends orders to a Google Sheet and sends an e
 - Create a Google Sheet (example name: "Remed Orders")
 - Create a tab (sheet) named `Orders`
 - Add a header row with these columns:
-  - `createdAt`, `locale`, `packId`, `quantity`, `customerName`, `phone`, `address`, `utmSource`, `utmCampaign`, `referrer`
+  - `createdAt`, `status`, `locale`, `packId`, `quantity`, `name`, `phone`, `address`, `utmSource`, `utmCampaign`, `referrer`
 - Create a Google Service Account and share the sheet with the service account email as **Editor**
 
 Notes:
@@ -35,6 +35,28 @@ Create a `.env.local` file and fill in values (no spaces around `=` is best).
 - Set `RESEND_API_KEY` and `NOTIFY_EMAIL_TO`
 
 Note: the sender is currently `Remed <onboarding@resend.dev>` (good for testing). For production, verify your domain/sender in Resend.
+
+### 4) Configure Google Analytics (GA4)
+
+- Create a GA4 property in [Google Analytics](https://analytics.google.com/)
+- Create a **Web data stream** for your site URL
+- Copy your **Measurement ID** (looks like `G-XXXXXXXXXX`)
+- Add this environment variable in `.env.local`:
+
+```bash
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+- Restart dev server after adding env vars
+
+Tracked custom events in this project:
+
+- `open_order_dialog`
+- `select_pack`
+- `submit_order_success`
+- `submit_order_error`
+
+Tip: In GA4, open **Reports → Realtime** and trigger these actions on your site to verify live tracking.
 
 ## Deploy on Vercel
 

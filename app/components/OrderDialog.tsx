@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { PACKS, PACK_ORDER, type PackId } from "../config/packs";
 import { getMvpDict } from "../i18n";
 import { useLocale } from "../i18n/LocaleProvider";
+import { trackEvent } from "../lib/analytics";
 
 type Props = {
   open: boolean;
@@ -158,8 +159,17 @@ export function OrderDialog({ open, onClose }: Props) {
       }
 
       setSuccess(true);
+      trackEvent("submit_order_success", {
+        locale,
+        pack_id: packId,
+        quantity: PACKS[packId].quantity,
+      });
     } catch {
       setError(orderDict.errorGeneric);
+      trackEvent("submit_order_error", {
+        locale,
+        pack_id: packId,
+      });
     } finally {
       setSubmitting(false);
     }
@@ -247,7 +257,15 @@ export function OrderDialog({ open, onClose }: Props) {
                               name="pack"
                               value={id}
                               checked={selected}
-                              onChange={() => setPackId(id)}
+                              onChange={() => {
+                                setPackId(id);
+                                trackEvent("select_pack", {
+                                  locale,
+                                  pack_id: id,
+                                  quantity: p.quantity,
+                                  price_tnd: p.priceTnd,
+                                });
+                              }}
                             />
                             <span className="truncate text-[13px] font-semibold">
                               {p.title[locale]}
