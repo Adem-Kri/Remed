@@ -163,15 +163,15 @@ export function OrderDialog({ open, onClose }: Props) {
       }
 
       setSuccess(true);
-      trackEvent("submit_order_success", {
-        locale,
+      trackEvent("commande_validee", {
+        langue: locale,
         pack_id: packId,
-        quantity: PACKS[packId].quantity,
+        quantite: PACKS[packId].quantity,
       });
     } catch {
       setError(orderDict.errorGeneric);
-      trackEvent("submit_order_error", {
-        locale,
+      trackEvent("erreur_commande", {
+        langue: locale,
         pack_id: packId,
       });
     } finally {
@@ -238,7 +238,9 @@ export function OrderDialog({ open, onClose }: Props) {
                     >
                       <div className="relative h-28 w-28 shrink-0 md:h-32 md:w-32">
                         <Image
-                          src={packImageFallback[id] ? "/Remed.webp" : p.imagePath}
+                          src={
+                            packImageFallback[id] ? "/Remed.webp" : p.imagePath
+                          }
                           alt={p.title[locale]}
                           width={160}
                           height={160}
@@ -269,11 +271,11 @@ export function OrderDialog({ open, onClose }: Props) {
                               checked={selected}
                               onChange={() => {
                                 setPackId(id);
-                                trackEvent("select_pack", {
-                                  locale,
+                                trackEvent("selection_pack", {
+                                  langue: locale,
                                   pack_id: id,
-                                  quantity: p.quantity,
-                                  price_tnd: p.priceTnd,
+                                  quantite: p.quantity,
+                                  prix_tnd: p.priceTnd,
                                 });
                               }}
                             />

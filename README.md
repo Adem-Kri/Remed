@@ -51,10 +51,12 @@ NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
 
 Tracked custom events in this project:
 
-- `open_order_dialog`
-- `select_pack`
-- `submit_order_success`
-- `submit_order_error`
+- `demarrage_session_remed`
+- `changement_locale`
+- `ouverture_formulaire_commande`
+- `selection_pack`
+- `commande_validee`
+- `erreur_commande`
 
 Tip: In GA4, open **Reports → Realtime** and trigger these actions on your site to verify live tracking.
 
