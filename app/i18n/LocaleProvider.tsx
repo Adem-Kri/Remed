@@ -1,7 +1,15 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useMemo, useState } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { usePathname, useRouter } from "next/navigation";
+
+import { trackEvent, trackPageView } from "../lib/analytics";
 
 import { DEFAULT_LOCALE, SUPPORTED_LOCALES, type Locale } from "./types";
 
@@ -13,9 +21,13 @@ type LocaleContextValue = {
 const LocaleContext = createContext<LocaleContextValue | null>(null);
 
 const STORAGE_KEY = "remed.locale";
+const GA_SESSION_KEY = "remed.ga.session_demarree";
 
 function isLocale(value: unknown): value is Locale {
-  return typeof value === "string" && (SUPPORTED_LOCALES as readonly string[]).includes(value);
+  return (
+    typeof value === "string" &&
+    (SUPPORTED_LOCALES as readonly string[]).includes(value)
+  );
 }
 
 export function LocaleProvider({ children }: { children: React.ReactNode }) {
@@ -52,11 +64,36 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     document.documentElement.dir = locale === "ar" ? "rtl" : "ltr";
   }, [locale]);
 
+  useEffect(() => {
+    if (!pathname) return;
+    const query = typeof window !== "undefined" ? window.location.search : "";
+    const fullPath = query ? `${pathname}${query}` : pathname;
+    trackPageView(fullPath);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!pathname || typeof window === "undefined") return;
+    if (window.sessionStorage.getItem(GA_SESSION_KEY)) return;
+
+    trackEvent("demarrage_session_remed", {
+      langue: locale,
+      chemin_page: pathname,
+    });
+    window.sessionStorage.setItem(GA_SESSION_KEY, "1");
+  }, [locale, pathname]);
+
   const value = useMemo<LocaleContextValue>(
     () => ({
       locale,
       setLocale: (nextLocale) => {
         if (nextLocale === locale) return;
+
+        trackEvent("changement_locale", {
+          langue_precedente: locale,
+          langue_nouvelle: nextLocale,
+          chemin_actuel: pathname ?? "/",
+        });
+
         setLocaleState(nextLocale);
 
         const current = pathname ?? "/";
@@ -74,7 +111,9 @@ export function LocaleProvider({ children }: { children: React.ReactNode }) {
     [locale, pathname, router],
   );
 
-  return <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>;
+  return (
+    <LocaleContext.Provider value={value}>{children}</LocaleContext.Provider>
+  );
 }
 
 export function useLocale() {

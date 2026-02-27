@@ -52,7 +52,10 @@ export function Landing() {
   const [formulaPreviewOk, setFormulaPreviewOk] = useState(true);
 
   function openOrderDialog(source: "hero" | "guarantee" | "final") {
-    trackEvent("open_order_dialog", { source, locale });
+    trackEvent("ouverture_formulaire_commande", {
+      source_cta: source,
+      langue: locale,
+    });
     setOrderOpen(true);
   }
 
