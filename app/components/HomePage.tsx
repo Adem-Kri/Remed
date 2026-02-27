@@ -5,6 +5,20 @@ type Props = {
 };
 
 export function HomePage({ locale }: Props) {
+  const languageTagByLocale = {
+    ar: "ar-TN",
+    fr: "fr-TN",
+    en: "en-TN",
+  } as const;
+
+  const productDescriptionByLocale = {
+    ar: "مكمل طبيعي لدعم توازن ضغط الدم وصحة القلب في تونس.",
+    fr: "Complément naturel destiné à soutenir la tension artérielle et la santé cardiovasculaire.",
+    en: "Natural supplement designed to support blood pressure balance and cardiovascular wellness.",
+  } as const;
+
+  const localePath = `https://www.remed.tn/${locale}`;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@graph": [
@@ -22,11 +36,21 @@ export function HomePage({ locale }: Props) {
         inLanguage: ["ar-TN", "fr-TN", "en-TN"],
       },
       {
+        "@type": "WebPage",
+        url: localePath,
+        inLanguage: languageTagByLocale[locale],
+        isPartOf: {
+          "@type": "WebSite",
+          url: "https://www.remed.tn",
+          name: "Remed Tunisie",
+        },
+      },
+      {
         "@type": "Product",
         name: "REMED HYPERTENSION",
         image: ["https://www.remed.tn/Remed.webp"],
-        description:
-          "Complément naturel destiné à soutenir la tension artérielle et la santé cardiovasculaire.",
+        description: productDescriptionByLocale[locale],
+        inLanguage: languageTagByLocale[locale],
         brand: {
           "@type": "Brand",
           name: "Remed",
@@ -38,7 +62,7 @@ export function HomePage({ locale }: Props) {
           highPrice: "330",
           offerCount: "4",
           availability: "https://schema.org/InStock",
-          url: "https://www.remed.tn",
+          url: localePath,
         },
       },
     ],

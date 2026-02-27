@@ -29,9 +29,18 @@ const metadataByLocale: Record<Locale, Metadata> = {
     openGraph: {
       url: "https://www.remed.tn/ar",
       locale: "ar_TN",
+      alternateLocale: ["fr_TN", "en_TN"],
       title: "Remed تونس | REMED HYPERTENSION",
       description:
         "مكمل طبيعي لدعم ضغط الدم مع توصيل سريع والدفع عند الاستلام في تونس.",
+      images: [
+        {
+          url: "https://www.remed.tn/Remed.webp",
+          width: 1200,
+          height: 1200,
+          alt: "Remed Tunisie",
+        },
+      ],
     },
   },
   fr: {
@@ -50,9 +59,18 @@ const metadataByLocale: Record<Locale, Metadata> = {
     openGraph: {
       url: "https://www.remed.tn/fr",
       locale: "fr_TN",
+      alternateLocale: ["ar_TN", "en_TN"],
       title: "Remed Tunisie | REMED HYPERTENSION",
       description:
         "Complément naturel pour soutenir la tension artérielle en Tunisie.",
+      images: [
+        {
+          url: "https://www.remed.tn/Remed.webp",
+          width: 1200,
+          height: 1200,
+          alt: "Remed Tunisie",
+        },
+      ],
     },
   },
   en: {
@@ -71,9 +89,18 @@ const metadataByLocale: Record<Locale, Metadata> = {
     openGraph: {
       url: "https://www.remed.tn/en",
       locale: "en_TN",
+      alternateLocale: ["ar_TN", "fr_TN"],
       title: "Remed Tunisia | REMED HYPERTENSION",
       description:
         "Natural product to support blood pressure and heart wellness in Tunisia.",
+      images: [
+        {
+          url: "https://www.remed.tn/Remed.webp",
+          width: 1200,
+          height: 1200,
+          alt: "Remed Tunisia",
+        },
+      ],
     },
   },
 };
