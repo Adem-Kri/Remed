@@ -238,7 +238,7 @@ export function Landing() {
                   className="block"
                 >
                   <Image
-                    src="/formula.webp"
+                    src="/Remed.webp"
                     alt={locale === "ar" ? "التركيبة" : "Formula"}
                     width={1200}
                     height={800}
