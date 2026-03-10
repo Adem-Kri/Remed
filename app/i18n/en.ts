@@ -33,8 +33,8 @@ export const en: Dictionary = {
     whoFor: {
       title: "👤 Who is REMED HYPERTENSION for?",
       body: [
-        "Recommended if you deal with:",
         "📌 Especially suitable for men and women aged 40+.",
+        "Recommended if you deal with:",
       ],
       chips: [
         "✅ High or unstable blood pressure",
@@ -52,9 +52,9 @@ export const en: Dictionary = {
         "🔥 REMED HYPERTENSION helps with:",
       ],
       bullets: [
-        "✅ Better artery flexibility and circulation",
-        "✅ Less pressure load on the heart",
-        "✅ Reduced artery stiffness",
+        "✅ Clean harmful cholesterol from the arteries",
+        "✅ Help prevent artery hardening",
+        "✅ Strengthen the heart muscle",
       ],
       footer:
         "⭐ In 2 to 6 weeks, your doctor may adjust dosage according to your improvement.",
@@ -83,20 +83,20 @@ export const en: Dictionary = {
       title: "🕒 How to use REMED HYPERTENSION",
       body: [
         "🔥 The right blood pressure treatment offer does not start with one bottle; it starts with a full program.",
-        "📌 Short protocol:",
+        "📌 Usage method:",
         "✅ Week 1: 1 capsule/day",
         "✅ Week 2: 2 capsules/day",
         "✅ Weeks 3-4: 3 capsules/day",
-        "➡️ The first month needs around 63 capsules.",
-        "🎯 That is why we recommend the 3-bottle pack for best results.",
+        "✅ Month 2: 2 capsules/day",
+        "✅ Month 3: 2 capsules/day",
         "⚠️ One bottle alone is not enough for a full first-month protocol.",
         "✔ Preferably after food with a large glass of water.",
       ],
     },
     guarantee: {
-      title: "🛡️ 30-day guarantee — try it risk-free",
+      title: "🛡️ 45-day guarantee — try it risk-free",
       body: [
-        "You have a 30-day money-back guarantee.",
+        "You have a 45-day money-back guarantee.",
         "If you’re not satisfied or don’t see expected results:",
         "📌 Contact us and we’ll refund you.",
       ],
@@ -117,12 +117,12 @@ export const en: Dictionary = {
           q: "Can I use it with my medication?",
           a: "Yes, but do not change medication without medical follow-up.",
         },
-        { q: "Can I return it?", a: "Yes, 30-day guarantee." },
+        { q: "Can I return it?", a: "Yes, 45-day guarantee." },
       ],
     },
     finalCta: {
       title: "Limited offer — don’t miss out!",
-      body: "Fast delivery across Tunisia · Pay on delivery · 30-day guarantee",
+      body: "Fast delivery across Tunisia · Pay on delivery · 45-day guarantee",
       cta: "Buy now",
     },
     microCopy: {

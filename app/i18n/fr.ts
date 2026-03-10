@@ -34,8 +34,8 @@ export const fr: Dictionary = {
     whoFor: {
       title: "👤 Pour qui REMED HYPERTENSION est recommandé ?",
       body: [
-        "Recommandé si vous avez :",
         "📌 Particulièrement adapté aux hommes et femmes de plus de 40 ans.",
+        "Recommandé si vous avez :",
       ],
       chips: [
         "✅ Tension élevée ou instable",
@@ -53,9 +53,9 @@ export const fr: Dictionary = {
         "🔥 REMED HYPERTENSION aide à :",
       ],
       bullets: [
-        "✅ Améliorer la souplesse artérielle et la circulation",
-        "✅ Réduire la charge sur le cœur",
-        "✅ Diminuer la rigidité des artères",
+        "✅ Nettoyer les artères du mauvais cholestérol",
+        "✅ Prévenir le durcissement des artères",
+        "✅ Renforcer le muscle cardiaque",
       ],
       footer:
         "⭐ En 2 à 6 semaines, votre médecin peut ajuster la dose selon l’amélioration.",
@@ -84,20 +84,20 @@ export const fr: Dictionary = {
       title: "🕒 Comment utiliser REMED HYPERTENSION",
       body: [
         "🔥 Un protocole sérieux contre l’hypertension ne commence pas avec une seule bouteille, mais avec un programme complet.",
-        "📌 Protocole court :",
+        "📌 Méthode d’utilisation :",
         "✅ Semaine 1 : 1 capsule/jour",
         "✅ Semaine 2 : 2 capsules/jour",
         "✅ Semaines 3-4 : 3 capsules/jour",
-        "➡️ Le premier mois demande environ 63 capsules.",
-        "🎯 C’est pourquoi nous recommandons le pack 3 bouteilles pour un meilleur résultat.",
+        "✅ Deuxième mois : 2 capsules/jour",
+        "✅ Troisième mois : 2 capsules/jour",
         "⚠️ Une seule bouteille ne couvre pas le protocole complet du premier mois.",
         "✔ De préférence après le repas avec un grand verre d’eau.",
       ],
     },
     guarantee: {
-      title: "🛡️ Garantie 30 jours — essayez sans risque",
+      title: "🛡️ Garantie 45 jours — essayez sans risque",
       body: [
-        "Vous bénéficiez d’une garantie satisfait ou remboursé pendant 30 jours.",
+        "Vous bénéficiez d’une garantie satisfait ou remboursé pendant 45 jours.",
         "Si vous n’êtes pas satisfait ou sans résultat attendu :",
         "📌 Contactez-nous et nous vous remboursons.",
       ],
@@ -118,12 +118,12 @@ export const fr: Dictionary = {
           q: "Puis-je l’utiliser avec mon traitement ?",
           a: "Oui, sans changer votre traitement sans suivi médical.",
         },
-        { q: "Puis-je retourner le produit ?", a: "Oui, garantie 30 jours." },
+        { q: "Puis-je retourner le produit ?", a: "Oui, garantie 45 jours." },
       ],
     },
     finalCta: {
       title: "Offre limitée – ne ratez pas l’occasion !",
-      body: "Livraison rapide en Tunisie · Paiement à la livraison · Garantie 30 jours",
+      body: "Livraison rapide en Tunisie · Paiement à la livraison · Garantie 45 jours",
       cta: "Acheter maintenant",
     },
     microCopy: {
