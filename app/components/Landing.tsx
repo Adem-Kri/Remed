@@ -47,9 +47,11 @@ export function Landing() {
   const hero = dict.hero;
   const faq = dict.sections.faq;
   const finalCta = dict.sections.finalCta;
+  const reportPages = ["/rapport_page1.webp", "/rapport_page2.webp"] as const;
 
   const [orderOpen, setOrderOpen] = useState(false);
-  const [formulaPreviewOk, setFormulaPreviewOk] = useState(true);
+  const [reportPreviewOk, setReportPreviewOk] = useState(true);
+  const [reportPageIndex, setReportPageIndex] = useState(0);
 
   function openOrderDialog(source: "hero" | "guarantee" | "final") {
     trackEvent("ouverture_formulaire_commande", {
@@ -222,45 +224,114 @@ export function Landing() {
         <Section
           title={
             locale === "ar"
-              ? "التركيبة"
+              ? "📄 تقرير الاختبار المخبري"
               : locale === "fr"
-                ? "Formule"
-                : "Formula"
+                ? "📄 Rapport d’essai du laboratoire"
+                : "📄 Laboratory test report"
           }
         >
           <div className="mx-auto max-w-3xl">
             <div className="rounded-2xl border border-[#E5E5E5] bg-indigo-50/60 p-3 transition duration-300 hover:shadow-[0_16px_34px_-26px_rgba(79,70,229,0.4)]">
-              {formulaPreviewOk ? (
-                <a
-                  href="/formula.webp"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="block"
-                >
-                  <Image
-                    src="/formula.webp"
-                    alt={locale === "ar" ? "التركيبة" : "Formula"}
-                    width={1200}
-                    height={800}
-                    className="h-auto w-full rounded-xl border border-[#E5E5E5] bg-white object-contain shadow-sm transition duration-300 hover:scale-[1.01]"
-                    onError={() => setFormulaPreviewOk(false)}
-                  />
-                </a>
+              {reportPreviewOk ? (
+                <div>
+                  <a
+                    href={reportPages[reportPageIndex]}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="block"
+                  >
+                    <Image
+                      src={reportPages[reportPageIndex]}
+                      alt={
+                        locale === "ar"
+                          ? `تقرير الاختبار - الصفحة ${reportPageIndex + 1}`
+                          : locale === "fr"
+                            ? `Rapport d’essai - page ${reportPageIndex + 1}`
+                            : `Laboratory report - page ${reportPageIndex + 1}`
+                      }
+                      width={1200}
+                      height={1600}
+                      className="h-auto w-full rounded-xl border border-[#E5E5E5] bg-white object-contain shadow-sm transition duration-300 hover:scale-[1.01]"
+                      onError={() => setReportPreviewOk(false)}
+                    />
+                  </a>
+
+                  <div className="mt-3 flex items-center justify-between gap-3">
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setReportPageIndex((prev) =>
+                          prev === 0 ? reportPages.length - 1 : prev - 1,
+                        )
+                      }
+                      className="rounded-xl border border-[#E5E5E5] bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition duration-200 hover:bg-indigo-50"
+                    >
+                      {locale === "ar"
+                        ? "الصفحة السابقة"
+                        : locale === "fr"
+                          ? "Page précédente"
+                          : "Previous page"}
+                    </button>
+
+                    <div className="text-sm font-semibold text-zinc-600">
+                      {locale === "ar"
+                        ? `الصفحة ${reportPageIndex + 1} / ${reportPages.length}`
+                        : locale === "fr"
+                          ? `Page ${reportPageIndex + 1} / ${reportPages.length}`
+                          : `Page ${reportPageIndex + 1} / ${reportPages.length}`}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        setReportPageIndex(
+                          (prev) => (prev + 1) % reportPages.length,
+                        )
+                      }
+                      className="rounded-xl border border-[#E5E5E5] bg-white px-4 py-2 text-sm font-semibold text-zinc-700 transition duration-200 hover:bg-indigo-50"
+                    >
+                      {locale === "ar"
+                        ? "الصفحة التالية"
+                        : locale === "fr"
+                          ? "Page suivante"
+                          : "Next page"}
+                    </button>
+                  </div>
+
+                  <div className="mt-3 flex items-center justify-center gap-2">
+                    {reportPages.map((_, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        onClick={() => setReportPageIndex(index)}
+                        aria-label={
+                          locale === "ar"
+                            ? `الانتقال إلى الصفحة ${index + 1}`
+                            : locale === "fr"
+                              ? `Aller à la page ${index + 1}`
+                              : `Go to page ${index + 1}`
+                        }
+                        className={
+                          "h-2.5 rounded-full transition-all duration-200 " +
+                          (reportPageIndex === index
+                            ? "w-8 bg-indigo-600"
+                            : "w-2.5 bg-indigo-200 hover:bg-indigo-300")
+                        }
+                      />
+                    ))}
+                  </div>
+                </div>
               ) : (
                 <div className="rounded-xl border border-[#E5E5E5] bg-white px-4 py-6 text-center text-sm text-zinc-700">
-                  {locale === "ar"
-                    ? "ضع ملف formula.webp داخل مجلد public لعرض المعاينة هنا"
-                    : "Place formula.webp in the public/ folder to show the preview here"}
+                  <p>
+                    {locale === "ar"
+                      ? "تعذر تحميل صور تقرير الاختبار حالياً."
+                      : locale === "fr"
+                        ? "Impossible de charger les images du rapport pour le moment."
+                        : "The report images could not be loaded at the moment."}
+                  </p>
                 </div>
               )}
-            </div>
-
-            <div className="mt-3 text-sm text-zinc-700">
-              {locale === "ar"
-                ? "اضغط على الصورة للتكبير"
-                : locale === "fr"
-                  ? "Cliquez pour zoomer"
-                  : "Click to zoom"}
             </div>
           </div>
         </Section>

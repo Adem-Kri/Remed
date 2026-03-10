@@ -12,6 +12,7 @@ export type Pack = {
   priceTnd: number;
   oldPriceTnd?: number;
   badge?: "discount" | "premium" | "best_value";
+  badgeText?: LocalizedCopy;
   imagePath: string;
   title: LocalizedCopy;
   gift: LocalizedCopy;
@@ -45,8 +46,13 @@ export const PACKS: Record<PackId, Pack> = {
     id: "pack_b",
     quantity: 2,
     priceTnd: 129,
-    oldPriceTnd: 138,
+    oldPriceTnd: 184,
     badge: "discount",
+    badgeText: {
+      ar: "💸 تخفيض %30",
+      fr: "💸 Remise -30%",
+      en: "💸 Save 30%",
+    },
     imagePath: "/pack-of-2.webp",
     title: {
       ar: "باك 2",
@@ -68,8 +74,13 @@ export const PACKS: Record<PackId, Pack> = {
     id: "pack_c",
     quantity: 3,
     priceTnd: 175,
-    oldPriceTnd: 207,
+    oldPriceTnd: 276,
     badge: "premium",
+    badgeText: {
+      ar: "🔥 تخفيض %37",
+      fr: "🔥 Remise -37%",
+      en: "🔥 Save 37%",
+    },
     imagePath: "/pack-of-3.webp",
     title: {
       ar: "باك 3",
@@ -91,8 +102,13 @@ export const PACKS: Record<PackId, Pack> = {
     id: "pack_d",
     quantity: 6,
     priceTnd: 330,
-    oldPriceTnd: 414,
+    oldPriceTnd: 552,
     badge: "best_value",
+    badgeText: {
+      ar: "🏆 تخفيض %40",
+      fr: "🏆 Remise -40%",
+      en: "🏆 Save 40%",
+    },
     imagePath: "/pack-of-6.webp",
     title: {
       ar: "باك 4",
@@ -100,9 +116,9 @@ export const PACKS: Record<PackId, Pack> = {
       en: "Pack 4",
     },
     gift: {
-      ar: "🎁 هدية: برنامج رياضي و غذائي 90 يوم + جدول متابعة للضغط و الكوليسترول + رسائل واتساب شخصية",
-      fr: "🎁 Cadeau: programme sport & nutrition 90 jours + suivi tension/cholestérol + messages WhatsApp personnalisés",
-      en: "🎁 Gift: 90-day sport and nutrition program + blood pressure/cholesterol tracking + personal WhatsApp messages",
+      ar: "🎁 هدية: برنامج رياضي و غذائي 90 يوم\n📋 جدول متابعة للضغط و الكوليسترول\n💬 رسائل واتساب شخصية",
+      fr: "🎁 Cadeau : programme sport & nutrition 90 jours\n📋 Suivi tension et cholestérol\n💬 Messages WhatsApp personnalisés",
+      en: "🎁 Gift: 90-day sport and nutrition program\n📋 Blood pressure and cholesterol tracking\n💬 Personal WhatsApp messages",
     },
     note: {
       ar: "👑 أفضل نتيجة قوية وثابتة",

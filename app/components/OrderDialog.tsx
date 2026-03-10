@@ -15,6 +15,21 @@ type Props = {
 
 const PHONE_RE = /^(?:\+216)?\d{8}$/;
 
+function formatBottleLabel(
+  quantity: 1 | 2 | 3 | 6,
+  locale: "ar" | "fr" | "en",
+) {
+  if (locale === "ar") {
+    return quantity === 1 ? "1 قارورة" : `${quantity} قوارير`;
+  }
+
+  if (locale === "fr") {
+    return quantity === 1 ? "1 bouteille" : `${quantity} bouteilles`;
+  }
+
+  return quantity === 1 ? "1 bottle" : `${quantity} bottles`;
+}
+
 export function OrderDialog({ open, onClose }: Props) {
   const { locale } = useLocale();
   const { ar, mvp } = getMvpDict(locale);
@@ -230,9 +245,9 @@ export function OrderDialog({ open, onClose }: Props) {
                     <label
                       key={id}
                       className={
-                        "flex w-full cursor-pointer items-start gap-2 rounded-2xl border bg-white p-2 text-left transition duration-200 hover:-translate-y-0.5 hover:bg-indigo-50/40 hover:shadow-[0_12px_24px_-18px_rgba(79,70,229,0.5)] " +
+                        "flex w-full cursor-pointer items-start gap-3 rounded-2xl border bg-white p-3 text-left transition duration-200 hover:border-indigo-200 hover:bg-white hover:shadow-[0_12px_24px_-20px_rgba(79,70,229,0.28)] " +
                         (selected
-                          ? "border-indigo-500 bg-indigo-50/60 ring-2 ring-indigo-300/60 shadow-[0_10px_22px_-16px_rgba(79,70,229,0.55)]"
+                          ? "scale-[1.01] border-indigo-400 bg-gradient-to-r from-indigo-50/50 to-violet-50/40 ring-1 ring-indigo-200 shadow-[0_16px_32px_-24px_rgba(79,70,229,0.32)]"
                           : "border-[#E5E5E5]")
                       }
                     >
@@ -252,7 +267,7 @@ export function OrderDialog({ open, onClose }: Props) {
                               }));
                             }
                           }}
-                          className="h-full w-full rounded-2xl bg-white object-contain p-1.5"
+                          className="h-full w-full rounded-2xl border border-zinc-100 bg-white object-contain p-2 shadow-sm"
                         />
                         <div className="pointer-events-none absolute inset-0 rounded-2xl">
                           <div className="absolute inset-x-0 top-0 h-[3px] rounded-t-2xl bg-gradient-to-b from-white to-transparent" />
@@ -262,7 +277,7 @@ export function OrderDialog({ open, onClose }: Props) {
                         </div>
                       </div>
                       <div className="min-w-0 flex-1">
-                        <div className="flex w-full items-center justify-between gap-1">
+                        <div className="flex w-full items-start justify-between gap-2">
                           <div className="flex min-w-0 items-center gap-1.5">
                             <input
                               type="radio"
@@ -279,29 +294,13 @@ export function OrderDialog({ open, onClose }: Props) {
                                 });
                               }}
                             />
-                            <span className="truncate text-[13px] font-semibold">
+                            <span className="truncate text-sm font-semibold text-zinc-900">
                               {p.title[locale]}
                             </span>
                           </div>
                           {p.badge ? (
-                            <span className="rounded-full border border-[#E5E5E5] bg-indigo-50 px-2 py-0.5 text-[11px] font-bold text-indigo-700 shadow-sm md:text-xs">
-                              {p.badge === "premium"
-                                ? locale === "ar"
-                                  ? "🔥 الأكثر طلبًا"
-                                  : locale === "fr"
-                                    ? "🔥 Populaire"
-                                    : "🔥 Most popular"
-                                : p.badge === "best_value"
-                                  ? locale === "ar"
-                                    ? "🏆 أفضل قيمة"
-                                    : locale === "fr"
-                                      ? "🏆 Meilleure valeur"
-                                      : "🏆 Best value"
-                                  : locale === "ar"
-                                    ? "💸 خصم"
-                                    : locale === "fr"
-                                      ? "💸 Réduction"
-                                      : "💸 Discount"}
+                            <span className="rounded-full border border-indigo-100 bg-indigo-50/70 px-2 py-0.5 text-[10px] font-semibold text-indigo-700 md:text-[11px]">
+                              {p.badgeText?.[locale]}
                             </span>
                           ) : (
                             <span className="text-[11px] text-zinc-500">
@@ -309,25 +308,23 @@ export function OrderDialog({ open, onClose }: Props) {
                             </span>
                           )}
                         </div>
-                        <div className="mt-0 text-[11px] text-zinc-600">
-                          {locale === "ar"
-                            ? `${p.quantity} قوارير`
-                            : locale === "fr"
-                              ? `${p.quantity} bouteilles`
-                              : `${p.quantity} bottles`}
-                        </div>
-                        <div className="text-[17px] font-semibold leading-none tracking-tight text-indigo-700">
-                          {p.priceTnd} {locale === "ar" ? "د.ت" : "TND"}
-                        </div>
-                        {p.oldPriceTnd ? (
-                          <div className="mt-0.5 inline-flex rounded-full border border-rose-200 bg-rose-50 px-1.5 py-0.5 text-[11px] font-semibold text-rose-600 line-through decoration-2">
-                            {p.oldPriceTnd} {locale === "ar" ? "د.ت" : "TND"}
+                        <div className="mt-2 flex flex-wrap items-center gap-2">
+                          <div className="inline-flex rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-[11px] font-semibold text-emerald-700 md:text-xs">
+                            {formatBottleLabel(p.quantity, locale)}
                           </div>
-                        ) : null}
-                        <div className="mt-1 text-[11px] leading-4 text-zinc-700">
+                          <div className="text-[18px] font-bold leading-none tracking-tight text-indigo-700">
+                            {p.priceTnd} {locale === "ar" ? "د.ت" : "TND"}
+                          </div>
+                          {p.oldPriceTnd ? (
+                            <div className="text-[11px] font-medium text-rose-400 line-through decoration-1">
+                              {p.oldPriceTnd} {locale === "ar" ? "د.ت" : "TND"}
+                            </div>
+                          ) : null}
+                        </div>
+                        <div className="mt-2 rounded-xl bg-amber-50/80 px-3 py-2 text-[12px] font-medium leading-5 text-amber-950 whitespace-pre-line md:text-[13px]">
                           {p.gift[locale]}
                         </div>
-                        <div className="mt-0.5 text-[11px] font-medium leading-4 text-indigo-700">
+                        <div className="mt-1 text-[12px] leading-5 text-zinc-600 md:text-[13px]">
                           {p.note[locale]}
                         </div>
                       </div>
